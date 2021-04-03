@@ -3,8 +3,8 @@ const commit = async function (req,res,next){
 
 
   let insertKnowledgeSql = 'insert into knowledge (chapter,knowledgePoint) values (?,?)'
-  let insertQuestionSql = 'insert into question (type,question,answer,difficulty,kid,optionA,optionB,optionC,optionD) values (?,?,?,?,?,?,?,?,?)';
-  let insertJudgementQuestionSql = 'insert into question (type,question,answer,difficulty,kid,optionA,optionB) values (?,?,?,?,?,?,?)';
+  let insertQuestionSql = 'insert into question (type,question,answer,difficulty,kid,optionA,optionB,optionC,optionD,citations) values (?,?,?,?,?,?,?,?,?,0)';
+  let insertJudgementQuestionSql = 'insert into question (type,question,answer,difficulty,kid,optionA,optionB,citations) values (?,?,?,?,?,?,?,0)';
   let insertProcessSql = 'insert into process (qid,text) values(?,?)'
   let data=req.body.data
 

@@ -1,7 +1,7 @@
 import query from '../model/query'
 const loadPaper = async function (req,res,next){
 
-  let paperSql='select pid,title from paper where pid = ?'
+  let paperSql='select pid,title,time from paper where pid = ?'
   let question2paperSql='select qid from question2paper where pid = ?'
   let questionChoiceSql='select * from question where qid = ? and type = "choice"'
   let questionJudgementSql='select * from question where qid = ? and type = "judgement"'
@@ -16,7 +16,8 @@ const loadPaper = async function (req,res,next){
   vals= await query(paperSql,arr)
   result={
     pid:vals[0].pid,
-    title:vals[0].title
+    title:vals[0].title,
+    time:vals[0].time
   }
 
   vals= await query(question2paperSql,arr)

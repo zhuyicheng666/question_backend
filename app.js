@@ -46,6 +46,28 @@ let loadPaper = require('./routes/loadPaper')
 app.use('/loadPaper',loadPaper)
 let searchPaper = require('./routes/searchPaper')
 app.use('/searchPaper',searchPaper)
+let searchPaperTime = require('./routes/searchPaperTime')
+app.use('/searchPaperTime',searchPaperTime)
+let getChapter = require('./routes/getChapter')
+app.use('/getChapter',getChapter)
+let uploadImg = require('./routes/uploadImg')
+app.use('/uploadImg',uploadImg)
+let getKnowledgePoint = require('./routes/getKnowledgePoint')
+app.use('/getKnowledgePoint',getKnowledgePoint)
+let saveAllRecord = require('./routes/saveAllRecord')
+app.use('/saveAllRecord',saveAllRecord)
+let searchPaperRecord = require('./routes/searchPaperRecord')
+app.use('/searchPaperRecord',searchPaperRecord)
+let searchAnsweredPaperRecord = require('./routes/searchAnsweredPaperRecord')
+app.use('/searchAnsweredPaperRecord',searchAnsweredPaperRecord)
+let searchRightAnswerRecord = require('./routes/searchRightAnswerRecord')
+app.use('/searchRightAnswerRecord',searchRightAnswerRecord)
+let searchWrongAnswerRecord = require('./routes/searchWrongAnswerRecord')
+app.use('/searchWrongAnswerRecord',searchWrongAnswerRecord)
+let saveSingleRecord = require('./routes/saveSingleRecord')
+app.use('/saveSingleRecord',saveSingleRecord)
+let random = require('./routes/random')
+app.use('/random',random)
 // var register = require('./routes/register')
 // app.use('/register', register)
 
@@ -59,7 +81,7 @@ var server = http.createServer(app);
 // end here
 
 
-
+app.use(express.static(path.join(__dirname, 'public')));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

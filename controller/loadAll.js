@@ -1,8 +1,13 @@
 import query from '../model/query'
 const loadAll = async function (req,res,next){
 
-  let sql="SELECT * from question,knowledge where type = ? and knowledge.kid=question.kid"
+  let sql="select * from (SELECT  qid,difficulty,citations,type,question,answer,question.kid,optionA,optionB,optionC,optionD,chapter,knowledgePoint from question,knowledge where type = ? and knowledge.kid=question.kid) as temp left join process on process.qid=temp.qid"
   
+ 
+
+
+
+
   let data=req.body.data,vals
 
   let arr=[data.type]

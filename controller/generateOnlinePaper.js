@@ -3,7 +3,7 @@ const generateOnlinePaper = async function (req,res,next){
 
 
 
-  let insertPaperSql = 'insert into paper(title,date,tid) values (?,?,?)'
+  let insertPaperSql = 'insert into paper(title,date,tid,time) values (?,?,?,?)'
   let insertQuestion2paperSql = 'insert into question2paper (pid,qid) values (?,?)'
 
 
@@ -15,7 +15,7 @@ const generateOnlinePaper = async function (req,res,next){
 
 
 
-  paperArr = [data.title,data.date,data.tid]
+  paperArr = [data.title,data.date,data.tid,data.time]
   vals =await query(insertPaperSql,paperArr)
   
   pid=vals.insertId
