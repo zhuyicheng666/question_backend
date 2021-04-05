@@ -1,37 +1,75 @@
 import query from '../model/query'
-const login = function (req,res,next){
-  let sql = 'SELECT * from student where username = ?';
-  let sql2 = 'SELECT * from teacher where username = ?'
-  let sqlArr = [req.body.data.name]
-  let cb=function(qerr,vals,fields){
-    if(qerr){
-      console.log("连接出错")
-    }else{
-      let password = req.body.data.password
-      if (password===vals[0].password){
-        res.send(JSON.stringify({
-        code: '0x000000000',
-        status: 1,
-        remark: '获取用户列表',
-        message: '请求成功',
-        data: vals
-         }));
-      }else{
-        res.send(JSON.stringify({
-          code: '0x000000000',
-          status: 0,
-          remark: '获取用户列表',
-          message: '请求失败',
-          data: null
-           }));
-      }
-    }
-  }
-  if (req.body.data.role==="学生"){
-    query(sql,sqlArr,cb)
-  }else{
-    query(sql2,sqlArr,cb)
-  }
+const login = async function (req,res,next){
+
   
-}
+  let selectStudentSql = "select * from student where userName = ? "
+  let selectTeacherSql = "select * from teacher where userName = ? "
+
+  let data=req.body.data
+
+
+  let vals,userName = data.userName,password=data.password,role=data.role
+
+  let array=[userName],result={}
+
+  if (userName==="11111111111" && password==="111111"){
+    res.send(
+      JSON.stringify({
+        code: 200,
+        message: '登陆成功',
+        data:{role:"superAdmin"}
+        })
+    )
+  }
+
+
+
+  if(role==="学生"){
+    vals=await query(selectStudentSql,array)
+    result.role="student"
+    result.sid=vals[0].sid
+  }else{
+    vals=await query(selectTeacherSql,array)
+    result.role="teacher"
+    result.tid=vals[0].tid
+  }
+
+ 
+
+
+
+  if (vals.length!==0){
+    if (vals[0].password===password){
+      res.send(
+        JSON.stringify({
+          code: 200,
+          message: '登陆成功',
+          data:result
+          })
+      )
+    }else{
+      res.send(
+        JSON.stringify({
+          code: 201,
+          message: '登陆失败',
+          })
+      )
+    }
+  }else{
+    res.send(
+      JSON.stringify({
+        code: 201,
+        message: '登陆失败',
+        })
+    )
+  }
+
+
+
+    
+ 
+
+
+  }
+
 export default login

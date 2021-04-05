@@ -5,13 +5,13 @@ const loadPaper = async function (req,res,next){
   let question2paperSql='select qid from question2paper where pid = ?'
   let questionChoiceSql='select * from question where qid = ? and type = "choice"'
   let questionJudgementSql='select * from question where qid = ? and type = "judgement"'
-
+  let recordSql = 'select  stuAnswer,count(stuAnswer) as total from record where pid = ? and qid = ? GROUP BY stuAnswer'
 
   let data=req.body.data,vals,result,choiceData=[],judgementData=[]
 
 
 
-  let arr=[data.pid]
+  let arr=[data.pid],flag=0
 
   vals= await query(paperSql,arr)
   result={
@@ -30,18 +30,32 @@ const loadPaper = async function (req,res,next){
      vals = await query(questionChoiceSql,arr)
     
      if(vals.length!==0){
-     
+        flag=1
         choiceData.push(vals[0])
-      console.log(1111)
+        console.log(1111)
      }
+
+
+
     vals = await query(questionJudgementSql,arr)
     
      if(vals.length!==0){
-
+        flag=2
         judgementData.push(vals[0])
-      console.log(3333)
+        console.log(3333)
      }
-   
+  
+     arr=[data.pid,item.qid]
+     console.log(arr)
+     vals = await query(recordSql,arr)
+
+     
+     if(flag=1){
+      choiceData[choiceData.length-1].optionsum=vals
+     }else{
+      judgementData[judgementData.length-1].optionsum=vals
+     }
+
   }
  
 

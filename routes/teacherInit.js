@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-import register from '../controller/register'
+import teacherInit from '../controller/teacherInit'
 
 
-router.post('/',register)
+router.post('/',teacherInit)
 module.exports = router;

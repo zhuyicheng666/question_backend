@@ -1,7 +1,7 @@
 import query from '../model/query'
 const loadAll = async function (req,res,next){
 
-  let sql="select * from (SELECT  qid,difficulty,citations,type,question,answer,question.kid,optionA,optionB,optionC,optionD,chapter,knowledgePoint from question,knowledge where type = ? and knowledge.kid=question.kid) as temp left join process on process.qid=temp.qid"
+  let sql="select temp.qid,difficulty,citations,type,question,answer,kid,optionA,optionB,optionC,optionD,chapter,knowledgePoint,pid,text  from (SELECT qid,difficulty,citations,type,question,answer,question.kid,optionA,optionB,optionC,optionD,chapter,knowledgePoint from question,knowledge where type = ? and knowledge.kid=question.kid) as temp left join process on process.qid=temp.qid"
   
  
 
@@ -14,8 +14,9 @@ const loadAll = async function (req,res,next){
   
   vals= await query(sql,arr)
 
+
   
-  // console.log(vals)
+   console.log(vals)
 
   if(vals.length !== 0 ){
     res.send(

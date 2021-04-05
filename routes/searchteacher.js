@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-import register from '../controller/register'
+import searchteacher from '../controller/searchteacher'
 
 
-router.post('/',register)
+router.post('/',searchteacher)
 module.exports = router;
