@@ -50,7 +50,7 @@ const loadPaper = async function (req,res,next){
      vals = await query(recordSql,arr)
 
      
-     if(flag=1){
+     if(flag===1){
       choiceData[choiceData.length-1].optionsum=vals
      }else{
       judgementData[judgementData.length-1].optionsum=vals
