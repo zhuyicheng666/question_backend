@@ -5,7 +5,7 @@ const register = async function (req,res,next){
   let selectStudentSql = "select * from student where userName = ? "
   let insertSql="insert into student ( userName, password, role,name) values(?,?,?,?)"
   // let insertStudent2TeacherSql = "insert into student2teacher (sid,tid,ischecked) values (?,?,0)"
-
+  let updateSql="update student SET password = ? WHERE userName = ?"
 
 
   let selectteacherSql = "select * from teacher where userName = ? "
@@ -32,15 +32,30 @@ const register = async function (req,res,next){
     vals = await query(selectteacherSql,arr)
   }
   
-
-  if (vals.length!==0){
+  console.log(vals)
+  if (vals.length!==0&&vals[0].password!==null){
     res.send(
       JSON.stringify({
         code: 201,
         message: '用户名重复',
         })
     )
-  }else{
+  }else if (vals.length!==0&&vals[0].password===null){
+
+    arr= [password,userName]
+
+    vals = await query(updateSql,arr)
+    arr= [userName,password,role,name]
+    vals = await query(selectStudentSql,arr)
+    if(vals.length!==0){
+      res.send(
+         JSON.stringify({
+           code: 200,
+           message: '注册成功',
+           })
+       )
+   }
+  } else {
     arr= [userName,password,role,name]
 
     if (role==="student"){
